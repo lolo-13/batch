@@ -24,6 +24,7 @@ public class BorrowingProxy {
     public List<UserLateBorrowing> getLateBorrowing(LocalDateTime today, String token){
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
+        header.set(HttpHeaders.AUTHORIZATION,"Bearer " + token);
         HttpEntity<String> request = new HttpEntity<>(header);
         ResponseEntity<List<UserLateBorrowing>> response = restTemplate.exchange(urlUsersBorrowing + "late-borrowing", HttpMethod.GET, request, new ParameterizedTypeReference<List<UserLateBorrowing>>() {});
 
@@ -33,6 +34,7 @@ public class BorrowingProxy {
     public void sendMailForLateBorrowing(UserLateBorrowing userLateBorrowing, String token){
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
+        header.set(HttpHeaders.AUTHORIZATION,"Bearer " + token);
         HttpEntity<UserLateBorrowing> request = new HttpEntity<>(userLateBorrowing, header);
         ResponseEntity<Void> response = restTemplate.exchange(urlUsersBorrowing + "recovery-late-borrowing", HttpMethod.POST,request,Void.class);
     }
