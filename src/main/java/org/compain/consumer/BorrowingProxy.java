@@ -12,6 +12,7 @@ import java.util.List;
 @Component
 public class BorrowingProxy {
 
+    private String token="";
     private String urlUsersBorrowing = "http://localhost:8081/api/borrowings/";
 
     private final RestTemplate restTemplate;
@@ -20,7 +21,7 @@ public class BorrowingProxy {
         this.restTemplate = restTemplate;
     }
 
-    public List<UserLateBorrowing> getLateBorrowing(LocalDateTime today){
+    public List<UserLateBorrowing> getLateBorrowing(LocalDateTime today, String token){
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<>(header);
@@ -29,7 +30,7 @@ public class BorrowingProxy {
         return response.getBody();
     }
 
-    public void sendMailForLateBorrowing(UserLateBorrowing userLateBorrowing){
+    public void sendMailForLateBorrowing(UserLateBorrowing userLateBorrowing, String token){
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<UserLateBorrowing> request = new HttpEntity<>(userLateBorrowing, header);
